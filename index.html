@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>etch-a-sketch</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="indxStyle.css">
+</head>
+
+
+<body>
+
+    <div id="buttonPanel">
+
+        <button id="resetButton">Reset grid</button>
+
+        <button id="clearButton">Clear grid</button>
+
+        <button id="blackButton">Black</button>
+
+        <button id="colorButton">RGB</button>
+
+        <button id="darkenButton">Darken</button>
+
+    </div>
+
+    <div id="gridContainer"></div>
+
+
+</body>
+
+
+<script>
+
+    let gridSize = 64;
+
+
+    function createDiv() { // creates the div that goes inside the grid
+        let gridDiv = document.createElement("div");
+        return gridDiv;
+    }
+
+
+    function createAndAppendDivs() {
+        let container = document.getElementById("gridContainer"),
+            myDivs = [],
+            i = 0,
+            numOfDivs = gridSize * gridSize; // total number of divs (e.g: 64 x 64)
+
+        for (i; i < numOfDivs; i++) {
+            myDivs.push(createDiv());
+            container.appendChild(myDivs[i]);
+        }
+    }
+
+
+    let resetBtn = document.querySelector('#resetButton');
+
+    resetBtn.addEventListener('click', () => {
+
+        var grid = document.getElementById("gridContainer");
+        while (grid.firstChild) {
+            grid.removeChild(grid.firstChild);
+        }
+
+        gridSize = prompt("Please enter grid size:");
+        document.getElementById("gridContainer").style.gridTemplateColumns = `repeat(${gridSize}, auto)`;
+
+        createDiv();
+        createAndAppendDivs();
+
+    });
+
+    let clearBtn = document.querySelector('#clearButton');
+
+    clearBtn.addEventListener('click', () => {
+
+        let innerDivs = gridContainer.querySelectorAll('div');
+        innerDivs.forEach((div) =>(div.style.backgroundColor = ""));
+
+    });
+
+
+
+    let blackBtn = document.querySelector('#blackButton');
+
+    blackBtn.addEventListener('click', () => {
+
+        let innerDivs = gridContainer.querySelectorAll('div');
+        innerDivs.forEach((div) => { div.addEventListener('mouseover', (e) => { e.target.style.backgroundColor = "black"; }) })
+    });
+
+
+
+    let colorBtn = document.querySelector('#colorButton');
+
+    colorBtn.addEventListener('click', () => {
+
+        let innerDivs = gridContainer.querySelectorAll('div');
+        innerDivs.forEach((div) => {
+            div.addEventListener('mouseover',
+                (e) => { e.target.style.backgroundColor = "#" + `${Math.floor(Math.random() * 16777215).toString(16)}`; })
+        })
+
+    });
+
+    let darkenBtn = document.querySelector('#darkenButton');
+
+    darkenBtn.addEventListener('click', () => {
+
+        let innerDivs = gridContainer.querySelectorAll('div');
+        innerDivs.forEach((div) => {
+            div.addEventListener('mouseover',
+                (e) => { e.target.style.backgroundColor = "rgb(60, 60, 60)"; })
+        })
+
+    });
+
+
+
+</script>
+
+</html>
